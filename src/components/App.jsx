@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import api from "../utils/Api.js";
 import * as auth from "../utils/auth.js";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -48,15 +48,18 @@ function App() {
 
   function tokenCheck() {
     const jwt = localStorage.getItem("jwt");
-    console.log("jwt", jwt);
     if (jwt) {
-      auth.checkToken(jwt).then((res) => {
+      auth.checkToken(jwt)
+      .then((res) => {
         setIsLoggedIn(true);
         setUserData({
           email: res.email,
           password: res.password,
         });
         navigate("/");
+      })
+      .catch((err) => {
+        console.log(`Возникла ошибка, ${err}`);
       });
     }
   }
@@ -203,7 +206,7 @@ function App() {
     api
       .addNewCard(data.name, data.link)
       .then((newCard) => {
-        setCards([...cards, newCard]);
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {

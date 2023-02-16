@@ -2,9 +2,6 @@
 
 ### Проектная работа курса «Веб‑разработчик»
 
-
-### Ссылка на проект https://alexandr-oniskevich.github.io/mesto-react/
-
 ## Используемые технологии
 * flex
 * grid
